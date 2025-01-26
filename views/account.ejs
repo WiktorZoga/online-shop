@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konto</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+</head>
+<body>
+    <%- include('partials/header', { type }) %>
+
+    <main class="container my-5">
+        <h1 class="mb-4 text-center">Zarządzaj kontem</h1>
+
+        <form action="/account/update" method="POST">
+            <div class="form-group mb-3">
+                <label for="username" class="form-label">Nowa nazwa użytkownika:</label>
+                <input type="text" id="username" name="username" value="<%= username %>" class="form-control" required>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="email" class="form-label">Nowy adres e-mail:</label>
+                <input type="email" id="email" name="email" value="<%= email %>" class="form-control" required>
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="password" class="form-label">Nowe hasło:</label>
+                <input type="password" id="password" name="password" class="form-control">
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="confirmPassword" class="form-label">Potwierdź nowe hasło:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" class="form-control">
+            </div>
+
+            <div class="form-group mb-3">
+                <label for="currentPassword" class="form-label">Stare hasło:</label>
+                <input type="password" id="currentPassword" name="currentPassword" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg btn-block">Zatwierdź zmiany</button>
+        </form>
+    </main>
+
+    <%- include('partials/footer') %>
+
+    <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
+</body>
+</html>

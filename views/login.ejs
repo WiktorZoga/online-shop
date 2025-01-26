@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logowanie</title>
+    <link rel="stylesheet" href="/css/styles.css"> 
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css"> 
+</head>
+<body>
+    <%- include('partials/header', { type }) %>
+
+    <main class="container d-flex justify-content-center align-items-center" style="min-height: 70vh;"> 
+        <div class="card shadow-sm" style="width: 100%; max-width: 400px;">
+            <div class="card-body">
+                <h2 class="card-title text-center mb-4">Logowanie</h2>
+
+                <% if (error) { %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= error %>
+                    </div>
+                <% } %>
+
+                <form action="/login" method="POST">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Nazwa użytkownika</label>
+                        <input type="text" id="username" name="username" class="form-control" value="<%= username || '' %>" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Hasło</label>
+                        <input type="password" id="password" name="password" class="form-control" required>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <button type="submit" class="btn btn-primary">Zaloguj</button>
+                        <a href="/signup" class="text-decoration-none">Nie masz konta? Zarejestruj się</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+</body>
+</html>

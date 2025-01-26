@@ -1,0 +1,154 @@
+/* Kolory */
+:root {
+    --primary-color: #007bff;
+    --hover-color: #0056b3;
+    --danger-color: #d9534f;
+    --warning-color: #f0ad4e;
+    --success-color: #5cb85c;
+    --active-color: #ffc107;
+    --neutral-color: #f4f4f4;
+    --text-color: #333;
+}
+
+/* Wspólne style dla przycisków */
+.btn {
+    text-decoration: none;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    display: inline-block;
+    text-align: center;
+    cursor: pointer;
+}
+
+.btn-danger { background-color: var(--danger-color); }
+.btn-danger:hover { background-color: darken(var(--danger-color), 10%); }
+
+.btn-warning { background-color: var(--warning-color); }
+.btn-warning:hover { background-color: darken(var(--warning-color), 10%); }
+
+.btn-success { background-color: var(--success-color); }
+.btn-success:hover { background-color: darken(var(--success-color), 10%); }
+
+/* Wspólne style dla tabel */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: var(--neutral-color);
+    font-weight: bold;
+}
+
+/* Tabela koszyka */
+.cart-main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cart-actions {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Tabela produktów */
+.product-table button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.product-table button:hover {
+    background-color: var(--hover-color);
+}
+
+/* Sidebar */
+#admin-sidebar {
+    height: 100vh;
+    background-color: #f8f9fa;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    padding-top: 20px;
+}
+
+#admin-sidebar .nav-link {
+    color: #495057;
+    font-size: 16px;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+
+#admin-sidebar .nav-link:hover,
+#admin-sidebar .nav-link.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+#admin-sidebar .nav-item {
+    margin-bottom: 10px;
+}
+
+/* Navbar i header */
+.navbar {
+    background-color: var(--primary-color);
+    padding: 20px;
+    margin-bottom: 10px;
+    height: 70px;
+}
+
+.navbar .nav-link.active {
+    color: var(--active-color);
+    font-weight: bold;
+    border-bottom: 2px solid var(--active-color);
+}
+
+/* Footer */
+footer {
+    background-color: var(--primary-color);
+    color: white;
+    position: relative;
+    z-index: 1000;
+    padding: 10px 0;
+}
+
+footer .nav-link {
+    color: white;
+    font-weight: 500;
+    padding: 8px 16px;
+    transition: background-color 0.3s;
+}
+
+footer .nav-link:hover {
+    background-color: var(--hover-color);
+    color: white;
+}
+
+footer .navbar-nav {
+    display: flex;
+    justify-content: center;
+}
+
+footer .navbar-nav .nav-item {
+    margin-left: 15px;
+}
+
+footer p {
+    color: white;
+    margin-bottom: 0;
+}

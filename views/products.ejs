@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produkty</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+    
+    <main class="container my-5">
+        <h1 class="text-center mb-4">Produkty</h1>
+
+        <form action="/products" method="GET" class="d-flex mb-4">
+            <input 
+                type="text" 
+                name="search"
+                class="form-control me-2" 
+                placeholder="Szukaj produktów..." 
+                value="<%= searchQuery || '' %>"> 
+            <button class="btn btn-primary" type="submit">Szukaj</button>
+        </form>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <% products.forEach(product => { %>
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <!-- Sekcja z obrazem produktu -->
+                        <img 
+                            src="/uploads/<%= product.imageUrls[0] %>" 
+                            class="card-img-top" 
+                            alt="<%= product.name %>" 
+                            style="object-fit: cover; height: 200px;">
+                        
+                        <div class="card-body">
+                            <h5 class="card-title"><%= product.name %></h5>
+                            <p class="card-text">Cena: <%= product.price %> PLN</p>
+                            
+                            <form action="/products/add" method="POST" class="d-flex justify-content-between">
+                                <input type="hidden" name="id" value="<%= product.id %>">
+                                <input type="hidden" name="name" value="<%= product.name %>">
+                                <input type="hidden" name="price" value="<%= product.price %>">
+                                <input type="hidden" name="searchQuery" value="<%= searchQuery || '' %>">
+                                <div class="input-group w-auto">
+                                    <input type="number" name="quantity" value="1" min="1" required class="form-control" style="width: 70px;">
+                                </div>
+                                <button type="submit" class="btn btn-success ms-2">Dodaj do koszyka</button>
+                            </form>
+                            
+                            <a href="/products/<%= product.id %>" class="btn btn-info mt-2">Zobacz szczegóły</a>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="/cart" class="btn btn-primary">Przejdź do koszyka</a>
+        </div>
+    </main>
+    
+    <%- include('partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realizacja zamówienia</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+</head>
+<body>
+    <%- include('partials/header', { type }) %>
+
+    <main class="container my-5">
+        <h1 class="mb-4 text-center">Podsumowanie zamówienia</h1>
+
+        <% if (cart.length === 0) { %>
+            <p class="text-center">Twój koszyk jest pusty. Przejdź do <a href="/cart" class="text-primary">koszyka</a>, aby dodać coś do zamówienia.</p>
+        <% } else { %>
+            <div class="mb-4">
+                <h4>Twoje produkty</h4>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nazwa</th>
+                            <th>Cena</th>
+                            <th>Ilość</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% cart.forEach(product => { %>
+                            <tr>
+                                <td><%= product.name %></td>
+                                <td><%= product.price %> PLN</td>
+                                <td><%= product.quantity %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+                <p><strong>Łączna cena:</strong> <%= totalPrice %> PLN</p>
+            </div>
+
+            <form action="/checkout" method="POST">
+                <h4>Twoje dane</h4>
+                <div class="form-group">
+                    <label for="firstName">Imię</label>
+                    <input type="text" class="form-control" id="firstName" name="firstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Nazwisko</label>
+                    <input type="text" class="form-control" id="lastName" name="lastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Numer telefonu</label>
+                    <input type="text" class="form-control" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="city">Miasto</label>
+                    <input type="text" class="form-control" id="city" name="city" required>
+                </div>
+                <div class="form-group">
+                    <label for="shippingAddress">Adres wysyłki</label>
+                    <input type="text" class="form-control" id="shippingAddress" name="shippingAddress" required>
+                </div>
+                <div class="form-group">
+                    <label for="postalCode">Kod pocztowy</label>
+                    <input type="text" class="form-control" id="postalCode" name="postalCode" required>
+                </div>
+
+                <input type="hidden" name="cartData" value="<%= JSON.stringify(cart) %>">
+                <input type="hidden" name="totalPrice" value="<%= totalPrice %>">
+
+                <button type="submit" class="btn btn-success btn-lg mt-4">Złóż zamówienie</button>
+            </form>
+        <% } %>
+
+        <% if (typeof orderData !== 'undefined') { %>
+            <div class="alert alert-success mt-4 text-center">
+                <strong>Zamówienie zostało pomyślnie złożone!</strong>
+            </div>
+        <% } %>
+
+    </main>
+
+    <%- include('partials/footer') %>
+    
+    <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
+</body>
+</html>

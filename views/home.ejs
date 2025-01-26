@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strona główna</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/bootstrap/bootstrap.min.css">
+</head>
+<body>
+    <%- include('partials/header', { type }) %>
+
+    <main class="container text-center my-5">
+        <h1 class="display-3 mb-4"><%= message || `Witaj ${username} w sklepie internetowym!` %></h1>
+        <p class="lead">Ciesz się zakupami i przeglądaj nasze najnowsze produkty!</p>
+        <a href="/products" class="btn btn-primary btn-lg mt-3">Zacznij zakupy</a>
+    </main>
+
+    <%- include('partials/footer', { type }) %>
+
+    <script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
+</body>
+</html>

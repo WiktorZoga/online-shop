@@ -1,0 +1,26 @@
+<nav id="admin-sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
+    <div class="position-sticky pt-3">
+        <ul class="nav flex-column">
+            <li class="nav-item">
+                <a class="nav-link <%= (currentPath === 'dashboard') ? 'active' : '' %>" href="/admin">
+                    <i class="bi bi-speedometer2 me-2"></i> Panel Administracyjny
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <%= (currentPath === 'users') ? 'active' : '' %>" href="/admin/users">
+                    <i class="bi bi-people me-2"></i> Zarządzaj użytkownikami
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <%= (currentPath === 'products') ? 'active' : '' %>" href="/admin/products">
+                    <i class="bi bi-box-seam me-2"></i> Zarządzaj produktami
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link <%= (currentPath === 'orders') ? 'active' : '' %>" href="/admin/orders">
+                    <i class="bi bi-bar-chart me-2"></i> Zamówienia
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
