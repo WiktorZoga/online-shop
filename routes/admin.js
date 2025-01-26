@@ -5,37 +5,27 @@ const Product = require('../models/Product');
 const Order = require('../models/Order');
 const multer = require('multer');
 const path = require('path');
+const isAdmin = require('../middleware/isAdmin');
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        // Ścieżka, gdzie będą zapisywane pliki
-        cb(null, path.join(__dirname, '../public/uploads'));  // Katalog public/uploads
+        cb(null, path.join(__dirname, '../public/uploads'));
     },
     filename: (req, file, cb) => {
-        // Zmiana nazwy pliku na unikalną (zawiera timestamp i rozszerzenie pliku)
-        const fileName = path.basename(file.originalname);  // Zwraca tylko nazwę pliku (np. a.png)
-        cb(null, fileName);  // Zapisz tylko nazwę pliku (np. a.png)
+        const fileName = path.basename(file.originalname); 
+        cb(null, fileName); 
     }
 });
 
-const upload = multer({ storage }).array('images', 5);  // Obsługuje wiele plików (maksymalnie 5)
+const upload = multer({ storage }).array('images', 5);
 
-router.get('/', (req, res) => {
-    if (req.session.account.type !== 'admin') {
-        return res.redirect('/');
-    }
-
+router.get('/', isAdmin, (req, res) => {
     res.render('admin/panel', {
         username: req.session.account.username,
     });
 });
 
-// Zarządzanie użytkownikami
-router.get('/users', async (req, res) => {
-    if (req.session.account.type !== 'admin') {
-        return res.redirect('/');
-    }
-
+router.get('/users', isAdmin, async (req, res) => {
     try {
         const users = await User.find();
         res.render('admin/users', {
@@ -48,8 +38,7 @@ router.get('/users', async (req, res) => {
     }
 });
 
-// Usuwanie użytkownika
-router.post('/users/delete', async (req, res) => {
+router.post('/users/delete', isAdmin, async (req, res) => {
     const { id } = req.body;
 
     try {
@@ -61,8 +50,7 @@ router.post('/users/delete', async (req, res) => {
     }
 });
 
-// Nadawanie uprawnień administratora
-router.post('/users/assign-admin', async (req, res) => {
+router.post('/users/assign-admin', isAdmin, async (req, res) => {
     const { id } = req.body;
 
     try {
@@ -74,12 +62,7 @@ router.post('/users/assign-admin', async (req, res) => {
     }
 });
 
-// Zarządzanie produktami
-router.get('/products', async (req, res) => {
-    if (req.session.account.type !== 'admin') {
-        return res.redirect('/');
-    }
-
+router.get('/products', isAdmin, async (req, res) => {
     try {
         const products = await Product.find();
         res.render('admin/products', {
@@ -92,12 +75,7 @@ router.get('/products', async (req, res) => {
     }
 });
 
-// Edycja/Przegląd produktu
-router.get('/products/edit/:id?', async (req, res) => {
-    if (req.session.account.type !== 'admin') {
-        return res.redirect('/');
-    }
-
+router.get('/products/edit/:id?', isAdmin, async (req, res) => {
     const { id } = req.params;
     let product = null;
 
@@ -116,23 +94,20 @@ router.get('/products/edit/:id?', async (req, res) => {
     });
 });
 
-// Dodawanie/edycja produktu z obsługą plików
-router.post('/products', upload, async (req, res) => {
+router.post('/products', isAdmin, upload, async (req, res) => {
     const { id, name, price, description } = req.body;
 
     if (!name || !price || !description) {
         return res.status(400).send('Wszystkie pola są wymagane.');
     }
-    const imageUrls = req.files ? req.files.map(file => file.filename) : [];  // Tylko nazwy plików
+    const imageUrls = req.files ? req.files.map(file => file.filename) : [];  
 
     try {
         const productData = { name, price, description, imageUrls };
 
         if (id) {
-            // Jeśli mamy id, aktualizujemy produkt
             await Product.findByIdAndUpdate(id, productData);
         } else {
-            // Jeśli nie mamy id, tworzymy nowy produkt
             const newProduct = new Product(productData);
             await newProduct.save();
         }
@@ -144,8 +119,7 @@ router.post('/products', upload, async (req, res) => {
     }
 });
 
-// Usuwanie produktu
-router.post('/products/delete', async (req, res) => {
+router.post('/products/delete', isAdmin, async (req, res) => {
     const { id } = req.body;
 
     try {
@@ -157,8 +131,7 @@ router.post('/products/delete', async (req, res) => {
     }
 });
 
-// Zarządzanie zamówieniami
-router.get('/orders', async (req, res) => {
+router.get('/orders', isAdmin, async (req, res) => {
     if (req.session.account.type !== 'admin') {
         return res.redirect('/');
     }
@@ -175,8 +148,7 @@ router.get('/orders', async (req, res) => {
     }
 });
 
-// Szczegóły zamówienia
-router.get('/orders/:id', async (req, res) => {
+router.get('/orders/:id', isAdmin, async (req, res) => {
     if (req.session.account.type !== 'admin') {
         return res.redirect('/');
     }
@@ -198,8 +170,7 @@ router.get('/orders/:id', async (req, res) => {
     }
 });
 
-// Zmiana statusu zamówienia
-router.post('/orders/:id/status', async (req, res) => {
+router.post('/orders/:id/status', isAdmin, async (req, res) => {
     const { id } = req.params;
     const { status } = req.body;
 

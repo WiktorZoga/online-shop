@@ -5,8 +5,8 @@ router.get('/', (req, res) => {
     if (req.session) {
         req.session.destroy((err) => {
             if (err) {
-                console.error('Error during logout:', err);
-                return res.status(500).send('A problem occurred during logout.');
+                console.error('Błąd podczas wylogowywania:', err);
+                return res.status(500).send('Błąd wystąpił podczas wylogowywania.');
             }
             res.redirect('/login');
         });

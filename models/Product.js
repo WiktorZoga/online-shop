@@ -4,7 +4,7 @@ const productSchema = new mongoose.Schema({
     name: { type: String, required: true },
     price: { type: Number, required: true },
     description: { type: String, required: true },
-    imageUrls: { type: [String], default: [] }  // Tablica przechowująca ścieżki do zdjęć
+    imageUrls: { type: [String], default: [] }  
 });
 
 module.exports = mongoose.model('Product', productSchema);
