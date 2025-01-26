@@ -8,12 +8,6 @@ const UserSchema = new mongoose.Schema({
     type: { type: String, default: 'user' } 
 });
 
-UserSchema.methods.comparePassword = function (password) {
-    return bcrypt.compare(password, this.password);
-};
-
-module.exports = mongoose.model('User', UserSchema);
-
 UserSchema.pre('save', async function(next) {
     if (this.isModified('password')) {
         try {
